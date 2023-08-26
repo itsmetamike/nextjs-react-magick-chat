@@ -14,10 +14,13 @@ export default function Home() {
 
   const sendMessage = async () => {
     try {
-      const response = await axios.post(API_ENDPOINT, { message }, {
+      const response = await axios.post(API_ENDPOINT, {
+        content: message,
+        agentId: AGENT_ID
+      }, {
         headers: {
-          'Agent-ID': AGENT_ID,
-          'API-Key': API_KEY,
+          'Authorization': API_KEY,
+          'Content-Type': 'application/json'
         }
       });
       setChat([...chat, { user: 'You', message }, { user: 'Bot', message: response.data.reply }]);
@@ -26,6 +29,7 @@ export default function Home() {
       console.error("Error sending message:", error);
     }
   };
+  
 
   const handleKeyPress = (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
