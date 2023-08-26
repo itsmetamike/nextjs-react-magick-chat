@@ -4,8 +4,9 @@ const API_ENDPOINT = 'https://api.magickml.com/api';
 const AGENT_ID = '0fdcf186-0a5a-4919-9bef-1bc543909b81';
 const API_KEY = '6d41694cc0e084bca0ce5dda74b670da';
 
-// Import the messages array from getMessages.js
-import { messages } from './getMessages';
+// Initialize messages as an array
+const messages = [];
+export { messages };
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -25,15 +26,11 @@ export default async function handler(req, res) {
         }
       });
 
-      // Log the API response to understand its structure
       console.log("API Response:", apiResponse.data);
 
       const botReply = apiResponse.data.reply;
-
-      // Log the messages after adding the bot's reply
       console.log("Current Messages:", messages);
 
-      // Add the bot's reply to the in-memory store
       if (botReply) {
         messages.push({ user: 'Bot', message: botReply });
       } else {
