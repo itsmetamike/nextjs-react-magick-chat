@@ -21,9 +21,9 @@ export default async function handler(req, res) {
       });
 
       const botReply = apiResponse.data.reply;
-
       // Add the bot's reply to the in-memory store
       messages.push({ user: 'Bot', message: botReply });
+      
 
       res.status(200).json({ success: true });
     } catch (error) {

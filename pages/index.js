@@ -11,8 +11,11 @@ export default function Home() {
   const [chat, setChat] = useState([]);
 
   const sendMessage = async () => {
+    // Add the user's message to the chat immediately
+    setChat(prevChat => [...prevChat, { user: 'You', message }]);
+    
     try {
-      await axios.post('/api/response', {
+      const response = await axios.post(API_ENDPOINT, {
         content: message,
         agentId: AGENT_ID
       }, {
@@ -21,6 +24,8 @@ export default function Home() {
           'Content-Type': 'application/json'
         }
       });
+      // Add the bot's response to the chat
+      setChat(prevChat => [...prevChat, { user: 'Bot', message: response.data.reply }]);
       setMessage('');
     } catch (error) {
       console.error("Error sending message:", error);
@@ -28,28 +33,35 @@ export default function Home() {
   };
   
 
+  
+
   const handleKeyPress = (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
       sendMessage();
     }
   };
-
+  
   useEffect(() => {
     const pollMessages = async () => {
       try {
         const response = await axios.get('/api/getMessages');
-        setChat(response.data);
+        if (response.data && Array.isArray(response.data)) {
+          setChat(response.data);
+        } else {
+          console.error("Invalid data format received:", response.data);
+        }
       } catch (error) {
         console.error("Error polling for messages:", error);
       }
     };
-
+  
     // Start polling
     const intervalId = setInterval(pollMessages, POLL_INTERVAL);
-
+  
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []);
+  
 
   return (
     <div style={{ height: '100vh', background: 'linear-gradient(to right, #ff6a00, #ee0979)', padding: '50px' }}>
