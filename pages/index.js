@@ -6,8 +6,6 @@ const AGENT_ID = '0fdcf186-0a5a-4919-9bef-1bc543909b81';
 const API_KEY = '6d41694cc0e084bca0ce5dda74b670da';
 const POLL_INTERVAL = 5000;
 
-
-
 export default function Home() {
   const [message, setMessage] = useState('');
   const [chat, setChat] = useState([]);
@@ -23,13 +21,12 @@ export default function Home() {
           'Content-Type': 'application/json'
         }
       });
-      setChat([...chat, { user: 'You', message }, { user: 'Bot', message: response.data.reply }]);
+      setChat(prevChat => [...prevChat, { user: 'You', message }, { user: 'Bot', message: response.data.reply }]);
       setMessage('');
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-  
 
   const handleKeyPress = (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
@@ -52,7 +49,7 @@ export default function Home() {
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
-    }, []);
+  }, []);
 
   return (
     <div style={{ height: '100vh', background: 'linear-gradient(to right, #ff6a00, #ee0979)', padding: '50px' }}>
