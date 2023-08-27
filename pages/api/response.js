@@ -4,7 +4,8 @@ const API_ENDPOINT = 'https://api.magickml.com/api';
 const AGENT_ID = '9acc0d41-e867-4ae2-8ead-2f60cf003ae4';
 const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
 
-// Use a shared in-memory store
+// In-memory store for messages
+// This is temporary and should be replaced with persistent storage in a real-world scenario
 export const messages = [];
 
 export default async function handler(req, res) {
@@ -26,10 +27,12 @@ export default async function handler(req, res) {
       });
 
       const botReply = apiResponse.data.result.Output;
+
       // Add the bot's reply to the in-memory store
       messages.push({ user: 'Bot', message: botReply });
       
       res.status(200).json({ success: true });
+
     } catch (error) {
       console.error("Error fetching bot's reply:", error);
       res.status(500).json({ error: 'Failed to get reply from the API' });

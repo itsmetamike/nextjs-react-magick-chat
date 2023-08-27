@@ -45,8 +45,11 @@ export default function Home() {
     const pollMessages = async () => {
       try {
         const response = await axios.get('/api/getMessages');
-        if (response.data && Array.isArray(response.data) && response.data.every(msg => 'user' in msg && 'message' in msg)) {
-          setChat(response.data);
+        if (response.data && Array.isArray(response.data)) {
+          // Only update the chat if there are new messages
+          if (response.data.length !== chat.length) {
+            setChat(response.data);
+          }
         } else {
           console.error("Invalid data format received:", response.data);
         }
@@ -60,7 +63,7 @@ export default function Home() {
   
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
-  }, []);
+  }, [chat]);  // Add chat as a dependency to the useEffect
   
 
   return (
