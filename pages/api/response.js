@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API_ENDPOINT = 'https://api.magickml.com/api';
-const AGENT_ID = '0fdcf186-0a5a-4919-9bef-1bc543909b81';
-const API_KEY = '6d41694cc0e084bca0ce5dda74b670da';
+const AGENT_ID = '9acc0d41-e867-4ae2-8ead-2f60cf003ae4';
+const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
 
 // Use a shared in-memory store
 export const messages = [];
