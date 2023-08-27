@@ -15,23 +15,21 @@ export default function Home() {
     setChat(prevChat => [...prevChat, { user: 'You', message }]);
     
     try {
-      const response = await axios.post('/api/response', {
-        content: message,
-        agentId: AGENT_ID
+      // Send the user's message to your server
+      await axios.post('/api/response', {
+        content: message
       }, {
         headers: {
-          'Authorization': API_KEY,
           'Content-Type': 'application/json'
         }
       });
-
-      // Note: The bot's reply is now handled in the useEffect polling function.
-      // The response from the API will be fetched in the next poll.
+      // Clear the input box
       setMessage('');
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
+  
 
   const handleKeyPress = (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
