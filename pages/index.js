@@ -46,9 +46,11 @@ export default function Home() {
       try {
         const response = await axios.get('/api/getMessages');
         if (response.data && Array.isArray(response.data)) {
-          // Only update the chat if there are new messages
-          if (response.data.length !== chat.length) {
-            setChat(response.data);
+          // Only append new messages if there are any
+          const newMessagesCount = response.data.length - chat.length;
+          if (newMessagesCount > 0) {
+            const newMessages = response.data.slice(-newMessagesCount);
+            setChat(prevChat => [...prevChat, ...newMessages]);
           }
         } else {
           console.error("Invalid data format received:", response.data);
@@ -64,6 +66,7 @@ export default function Home() {
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, [chat]);  // Add chat as a dependency to the useEffect
+
   
 
   return (
