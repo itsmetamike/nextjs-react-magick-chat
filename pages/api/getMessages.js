@@ -1,4 +1,4 @@
-// Use the same in-memory store from before
+// Import the shared in-memory store from response.js
 import { messages } from './response';
 
 export default function handler(req, res) {

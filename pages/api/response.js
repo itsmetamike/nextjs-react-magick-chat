@@ -1,6 +1,11 @@
-// response.js
 import axios from 'axios';
-import { messages } from './getMessages';
+
+const API_ENDPOINT = 'https://api.magickml.com/api';
+const AGENT_ID = '0fdcf186-0a5a-4919-9bef-1bc543909b81';
+const API_KEY = '6d41694cc0e084bca0ce5dda74b670da';
+
+// Use a shared in-memory store
+export const messages = [];
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -24,7 +29,6 @@ export default async function handler(req, res) {
       // Add the bot's reply to the in-memory store
       messages.push({ user: 'Bot', message: botReply });
       
-
       res.status(200).json({ success: true });
     } catch (error) {
       console.error("Error fetching bot's reply:", error);

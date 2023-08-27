@@ -45,7 +45,7 @@ export default function Home() {
     const pollMessages = async () => {
       try {
         const response = await axios.get('/api/getMessages');
-        if (response.data && Array.isArray(response.data)) {
+        if (response.data && Array.isArray(response.data) && response.data.every(msg => 'user' in msg && 'message' in msg)) {
           setChat(response.data);
         } else {
           console.error("Invalid data format received:", response.data);
