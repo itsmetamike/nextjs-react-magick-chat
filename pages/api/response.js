@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         }
       });
 
-      const botReply = apiResponse.data.reply;
+      const botReply = apiResponse.data.result.Output;
       // Add the bot's reply to the in-memory store
       messages.push({ user: 'Bot', message: botReply });
       
