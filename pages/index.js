@@ -25,7 +25,7 @@ export default function Home() {
         }
       });
       // Add the bot's response to the chat
-      setChat(prevChat => [...prevChat, { user: 'Bot', message: response.data.reply }]);
+      setChat(prevChat => [...prevChat, { user: 'Bot', message: response.data.result.Output }]);
       setMessage('');
     } catch (error) {
       console.error("Error sending message:", error);
