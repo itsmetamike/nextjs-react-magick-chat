@@ -71,16 +71,14 @@ export default function Home() {
   
 
   return (
-    <div style={{ height: '100vh', backgroundColor: 'black', padding: '50px', fontFamily: 'Courier New, Courier, monospace' }}>
-      <h1 style={{ color: '#00FF00' }}>{chatTitle}</h1>
-      <img src="https://framerusercontent.com/images/OONMMucdnpD4xGWMoRzpdMibGJ4.png?scale-down-to=512" alt="Matrix Icon" />
-      <div style={{ color: '#00FF00', fontSize: '12px', marginBottom: '20px' }}>
-        Welcome to Matrix Chat - A sleek y2k style chat interface.
-      </div>
-      <div style={{ backgroundColor: '#1A1A1A', padding: '20px', borderRadius: '10px' }}>
+    <div style={{ height: '100vh', background: 'black', padding: '50px', fontFamily: 'Courier New, monospace', color: 'limegreen' }}>
+      <h1>{chatTitle}</h1>
+      <img src="https://framerusercontent.com/images/OONMMucdnpD4xGWMoRzpdMibGJ4.png?scale-down-to=512" alt="Y2K Image" style={{ margin: '20px 0', maxWidth: '100%' }} />
+      <p>Welcome to the Y2K ChatBot - the ultimate matrix-inspired chat interface. Engage in a conversation with our AI and dive deep into the digital world!</p>
+      <div style={{ backgroundColor: 'black', padding: '20px', border: '2px solid limegreen', borderRadius: '10px' }}>
         {chat.map((msg, index) => (
           <div key={index}>
-            <strong style={{ color: msg.user === 'You' ? '#00FF00' : '#FF4500' }}>{msg.user}:</strong> {msg.message}
+            <strong>{msg.user}:</strong> {msg.message}
           </div>
         ))}
         <input
@@ -88,11 +86,12 @@ export default function Home() {
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Type your message..."
-          style={{ width: '80%', padding: '10px', margin: '10px 0', backgroundColor: '#333', color: '#00FF00', border: '1px solid #00FF00' }}
+          style={{ width: '80%', padding: '10px', margin: '10px 0', backgroundColor: 'black', color: 'limegreen', border: '1px solid limegreen' }}
         />
-        <button style={{ backgroundColor: '#00FF00', color: 'black', border: 'none', padding: '5px 10px', borderRadius: '5px' }} onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} style={{ backgroundColor: 'limegreen', border: 'none', padding: '5px 10px', cursor: 'pointer' }}>Send</button>
       </div>
     </div>
   );
+
 
 }
