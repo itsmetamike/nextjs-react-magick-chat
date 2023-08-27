@@ -15,15 +15,17 @@ export default function Home() {
     setChat(prevChat => [...prevChat, { user: 'You', message }]);
     
     try {
-      // Send the user's message to your server
-      await axios.post('/api/response', {
-        content: message
+      const response = await axios.post(API_ENDPOINT, {
+        content: message,
+        agentId: AGENT_ID
       }, {
         headers: {
+          'Authorization': API_KEY,
           'Content-Type': 'application/json'
         }
       });
-      // Clear the input box
+      // Add the bot's response to the chat
+      setChat(prevChat => [...prevChat, { user: 'Bot', message: response.data.reply }]);
       setMessage('');
     } catch (error) {
       console.error("Error sending message:", error);
@@ -31,12 +33,14 @@ export default function Home() {
   };
   
 
+  
+
   const handleKeyPress = (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
       sendMessage();
     }
   };
-
+  
   useEffect(() => {
     const pollMessages = async () => {
       try {
@@ -54,12 +58,10 @@ export default function Home() {
     // Start polling
     const intervalId = setInterval(pollMessages, POLL_INTERVAL);
   
-    // Poll immediately on component mount
-    pollMessages();
-
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []);
+  
 
   return (
     <div style={{ height: '100vh', background: 'linear-gradient(to right, #ff6a00, #ee0979)', padding: '50px' }}>
@@ -80,4 +82,17 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+getMessages.js
+
+// Use the same in-memory store from before
+import { messages } from './response';
+
+export default function handler(req, res) {
+  if (req.method === 'GET') {
+    res.status(200).json(messages);
+  } else {
+    res.status(405).json({ error: 'Method not allowed' });
+  }
 }
