@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_ENDPOINT = 'https://api.magickml.com/api';
@@ -8,17 +8,45 @@ const AGENT_ID = '9acc0d41-e867-4ae2-8ead-2f60cf003ae4';
 const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
 const POLL_INTERVAL = 5000;
 const chatTitle = "Magick Chat"; // Editable chat title
-const chatDescription = "This is a Magick agent that you can chat with!"
-const chatOtherInfo = "Help spread the word about Magick!"
+const chatDescription = "This is a Magick agent that you can chat with!";
+const chatOtherInfo = "Help spread the word about Magick!";
+
+// Gradient animation
+const GradientAnimation = keyframes`
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+`;
 
 const Container = styled(motion.div)`
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(45deg, #f3a5a7, #fdc3db);
+    background-size: 200% 200%;
+    animation: ${GradientAnimation} 10s infinite;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    border-radius: 15px;
+`;
+
+const ChatTitle = styled.div`
+    background: #fdc3db;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
 `;
 
 const ChatContainer = styled(motion.div)`
@@ -28,6 +56,12 @@ const ChatContainer = styled(motion.div)`
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+`;
+
+const ChatDescription = styled.div`
+    padding: 10px;
+    text-align: center;
+    background: rgba(253, 195, 219, 0.7);
 `;
 
 const ChatDisplay = styled(motion.div)`
@@ -52,6 +86,7 @@ const TextArea = styled.textarea`
     outline: none;
     resize: none;
     margin-right: 10px;
+    font-family: 'Poppins', sans-serif;
 `;
 
 const SendButton = styled(motion.button)`
@@ -67,41 +102,24 @@ const SendButton = styled(motion.button)`
     }
 `;
 
-const ChatTitle = styled.div`
-    background: #fdc3db;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-`;
-
-const ChatDescription = styled.div`
-    padding: 10px;
-    text-align: center;
-    background: rgba(253, 195, 219, 0.7);
-    font-family: 'Poppins', sans-serif;
-`;
-
 const ChatOtherInfo = styled.div`
     padding: 10px;
     text-align: center;
     font-size: 0.9em;
     margin-top: 20px;
-    font-family: 'Poppins', sans-serif;
 `;
 
-const AnimatedBackground = styled(motion.div)`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    background: linear-gradient(45deg, #f3a5a7, #fdc3db);
-    border-radius: 15px;
-`;
+// const ChatTitle = styled.div`
+//     background: #fdc3db;
+//     padding: 15px;
+//     text-align: center;
+//     font-size: 1.5em;
+//     font-weight: bold;
+//     color: white;
+//     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+// `;
+
+
 
 export default function Home() {
     const [message, setMessage] = useState('');
@@ -169,10 +187,6 @@ export default function Home() {
   return (
     <Container initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
         <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-            <AnimatedBackground
-                animate={{ background: ["linear-gradient(45deg, #f3a5a7, #fdc3db)", "linear-gradient(45deg, #fdc3db, #f3a5a7)"] }}
-                transition={{ duration: 5, yoyo: Infinity }}
-            />
             <ChatTitle>{chatTitle}</ChatTitle>
             <ChatDescription>{chatDescription}</ChatDescription>
             <ChatDisplay>
