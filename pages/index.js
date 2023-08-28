@@ -7,7 +7,10 @@ const API_ENDPOINT = 'https://api.magickml.com/api';
 const AGENT_ID = '9acc0d41-e867-4ae2-8ead-2f60cf003ae4';
 const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
 const POLL_INTERVAL = 5000;
-const chatTitle = "Matrix Chat"; // Editable chat title
+const chatTitle = "Magick Chat"; // Editable chat title
+const chatDescription = "This is a Magick agent that you can chat with!"
+const chatOtherInfo = "Help spread the word about Magick!"
+
 const Container = styled(motion.div)`
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(45deg, #f3a5a7, #fdc3db);
