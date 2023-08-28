@@ -9,41 +9,59 @@ const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
 const POLL_INTERVAL = 5000;
 const chatTitle = "Matrix Chat"; // Editable chat title
 const Container = styled(motion.div)`
-  height: 100vh;
-  padding: 50px;
-  background: black;
-  font-family: 'Courier New', monospace;
-  color: limegreen;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #f3a5a7, #fdc3db);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 `;
 
-const Message = styled(motion.div)`
-  &:hover {
-    opacity: 0.7;
-  }
+const ChatContainer = styled(motion.div)`
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 `;
 
-const Input = styled.input`
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: black;
-  color: limegreen;
-  border: 1px solid limegreen;
-  &:focus {
+const ChatDisplay = styled(motion.div)`
+    height: 300px;
+    overflow-y: auto;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+const ChatInput = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #fdc3db;
+`;
+
+const TextArea = styled.textarea`
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
     outline: none;
-    border: 1px solid white;
-  }
+    resize: none;
+    margin-right: 10px;
 `;
 
-const Button = styled.button`
-  background-color: limegreen;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: opacity 0.3s;
-  &:hover {
-    opacity: 0.8;
-  }
+const SendButton = styled(motion.button)`
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #f3a5a7;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+    &:hover {
+        background: #f37a83;
+    }
 `;
 
 export default function Home() {
@@ -111,20 +129,21 @@ export default function Home() {
 
   return (
     <Container initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.h1 initial={{ y: -50 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>{chatTitle}</motion.h1>
-      <motion.img src="https://framerusercontent.com/images/OONMMucdnpD4xGWMoRzpdMibGJ4.png?scale-down-to=512" alt="Image" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }} />
-      <motion.p initial={{ y: 50 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>Welcome to the chat interface.</motion.p>
-      <div style={{ padding: '20px', border: '2px solid limegreen', borderRadius: '10px' }}>
-        <AnimatePresence>
-          {chat.map((msg, index) => (
-            <Message key={index} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}>
-              <strong>{msg.user}:</strong> {msg.message}
-            </Message>
-          ))}
-        </AnimatePresence>
-        <Input value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={handleKeyPress} placeholder="Type your message..." />
-        <Button onClick={sendMessage}>Send</Button>
-      </div>
+      <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+        <ChatDisplay>
+          <AnimatePresence>
+            {chat.map((msg, index) => (
+              <motion.div key={index} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}>
+                <strong>{msg.user}:</strong> {msg.message}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </ChatDisplay>
+        <ChatInput>
+          <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type your message..." />
+          <SendButton onClick={sendMessage} whileHover={{ scale: 1.1 }}>Send</SendButton>
+        </ChatInput>
+      </ChatContainer>
     </Container>
   );
 
