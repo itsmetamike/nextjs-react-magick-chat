@@ -64,6 +64,27 @@ const SendButton = styled(motion.button)`
     }
 `;
 
+const ChatTitle = styled.div`
+    background: #fdc3db;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+`;
+
+const ChatDescription = styled.div`
+    padding: 10px;
+    text-align: center;
+    background: rgba(253, 195, 219, 0.7);
+`;
+
+const ChatOtherInfo = styled.div`
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 20px;
+`;
+
 export default function Home() {
     const [message, setMessage] = useState('');
     const [chat, setChat] = useState([]);
@@ -129,23 +150,27 @@ export default function Home() {
 
   return (
     <Container initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-        <ChatDisplay>
-          <AnimatePresence>
-            {chat.map((msg, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}>
-                <strong>{msg.user}:</strong> {msg.message}
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </ChatDisplay>
-        <ChatInput>
-          <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type your message..." />
-          <SendButton onClick={sendMessage} whileHover={{ scale: 1.1 }}>Send</SendButton>
-        </ChatInput>
-      </ChatContainer>
+        <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+            <ChatTitle>{chatTitle}</ChatTitle>
+            <ChatDescription>{chatDescription}</ChatDescription>
+            <ChatDisplay>
+                <AnimatePresence>
+                    {chat.map((msg, index) => (
+                        <motion.div key={index} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}>
+                            <strong>{msg.user}:</strong> {msg.message}
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </ChatDisplay>
+            <ChatInput>
+                <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type your message..." />
+                <SendButton onClick={sendMessage} whileHover={{ scale: 1.1 }}>Send</SendButton>
+            </ChatInput>
+        </ChatContainer>
+        <ChatOtherInfo>{chatOtherInfo}</ChatOtherInfo>
     </Container>
-  );
+);
+
 
 
 }
