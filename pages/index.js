@@ -11,6 +11,16 @@ const chatTitle = "Magick Chat"; // Editable chat title
 const chatDescription = "This is a Magick agent that you can chat with!"
 const chatOtherInfo = "Help spread the word about Magick!"
 
+const Container = styled(motion.div)`
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #f3a5a7, #fdc3db);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+`;
+
 const ChatContainer = styled(motion.div)`
     width: 90%;
     max-width: 500px;
