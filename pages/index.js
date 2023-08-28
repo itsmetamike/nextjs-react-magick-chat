@@ -11,16 +11,6 @@ const chatTitle = "Magick Chat"; // Editable chat title
 const chatDescription = "This is a Magick agent that you can chat with!"
 const chatOtherInfo = "Help spread the word about Magick!"
 
-const Container = styled(motion.div)`
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(45deg, #f3a5a7, #fdc3db);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-`;
-
 const ChatContainer = styled(motion.div)`
     width: 90%;
     max-width: 500px;
@@ -71,8 +61,11 @@ const ChatTitle = styled.div`
     background: #fdc3db;
     padding: 15px;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.7em;
     font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    font-family: 'Arial Black', 'Gadget', sans-serif; // A font similar to American Apparel's
 `;
 
 const ChatDescription = styled.div`
@@ -84,8 +77,19 @@ const ChatDescription = styled.div`
 const ChatOtherInfo = styled.div`
     padding: 10px;
     text-align: center;
-    font-size: 0.9em;
+    font-size: 1em;
     margin-top: 20px;
+`;
+
+const AnimatedContainer = styled(Container)`
+    background: linear-gradient(45deg, #f3a5a7, #fdc3db, #f3a5a7);
+    background-size: 200% 200%;
+    animation: GradientShift 10s infinite;
+    @keyframes GradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 `;
 
 export default function Home() {
@@ -152,26 +156,19 @@ export default function Home() {
   
 
   return (
-    <Container initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+    <AnimatedContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <ChatContainer initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }} style={{borderRadius: '15px'}}>
             <ChatTitle>{chatTitle}</ChatTitle>
             <ChatDescription>{chatDescription}</ChatDescription>
             <ChatDisplay>
-                <AnimatePresence>
-                    {chat.map((msg, index) => (
-                        <motion.div key={index} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }}>
-                            <strong>{msg.user}:</strong> {msg.message}
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
+                {/* ... */}
             </ChatDisplay>
             <ChatInput>
-                <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type your message..." />
-                <SendButton onClick={sendMessage} whileHover={{ scale: 1.1 }}>Send</SendButton>
+                {/* ... */}
             </ChatInput>
         </ChatContainer>
         <ChatOtherInfo>{chatOtherInfo}</ChatOtherInfo>
-    </Container>
+    </AnimatedContainer>
 );
 
 
