@@ -4,8 +4,8 @@ import styled, { keyframes } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_ENDPOINT = 'https://api.magickml.com/api';
-const AGENT_ID = '9acc0d41-e867-4ae2-8ead-2f60cf003ae4';
-const API_KEY = '3ad7bec48d6b8df5b1b3b1085cba7ec2';
+const AGENT_ID = 'd94fa239-0e9c-4fa1-ae59-b81466ce402d';
+const API_KEY = '3097be0a21945ac496f0ab81b01338a6';
 const POLL_INTERVAL = 5000;
 const chatTitle = "Magick Chat"; // Editable chat title
 const chatDescription = "This is a Magick agent that you can chat with!";
